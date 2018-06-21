@@ -1,0 +1,19 @@
+{
+  "name": "esoteric-languages",
+  "version": "1.0.0",
+  "description": "",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gitlab/esoteric-languages.git"
+  },
+  "author": "CosasDePuma",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gitlab/esoteric-languages/issues"
+  },
+  "homepage": "https://github.com/gitlab/esoteric-languages#readme"
+}
