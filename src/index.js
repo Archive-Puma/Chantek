@@ -110,12 +110,13 @@ class HQ9 {
       case 'H': ret = 'Hello world!'; break
       case 'Q': ret = this.code; break
       case '9':
-        for(let i = 99; i > 1; i--)
+        for (let i = 99; i > 1; i--) {
           ret += `${i} bottles of beer on the wall, ${i} bottles of beer.\n
           Take one down and pass it around, ${i - 1} bottles of beer on the wall.\n\n`
+        }
         ret += `1 bottle of beer on the wall, 1 bottle of beer.\n
-        Take one down and pass it around, no more bottles of beer on the wall.\n\n
-        No more bottles of beer on the wall, no more bottles of beer.\n
+        Take one down and pass it around, no more bottles of beer on the wall.\n\n`
+        ret += `No more bottles of beer on the wall, no more bottles of beer.\n
         Go to the store and buy some more, 99 bottles of beer on the wall.`
         break
       case '+': this.accumulator++; break
@@ -125,8 +126,9 @@ class HQ9 {
   }
 
   interpret () {
-    for(let cmd of this.code)
-      console.log(cmd)
+    let ret = ''
+    for (let cmd of this.code) { ret += this.parse(cmd) + '\n' }
+    return ret.trim()
   }
 
   run (code) {
@@ -147,21 +149,6 @@ class HQ9 {
     console.time('Compiled in')
     this.interpret()
     console.timeEnd('Compiled in')
-  }
-
-  toOok (code) {
-    // TODO: Code or file with code
-    let __code = code || this.code
-    return this.clean(__code)
-      .replace(new RegExp('\\.', 'g'), 'Ook! Ook. ')
-      .replace(new RegExp('\\,', 'g'), 'Ook. Ook! ')
-      .replace(new RegExp('\\>', 'g'), 'Ook. Ook? ')
-      .replace(new RegExp('\\<', 'g'), 'Ook? Ook. ')
-      .replace(new RegExp('\\[', 'g'), 'Ook! Ook? ')
-      .replace(new RegExp('\\]', 'g'), 'Ook? Ook! ')
-      .replace(new RegExp('\\+', 'g'), 'Ook. Ook. ')
-      .replace(new RegExp('\\-', 'g'), 'Ook! Ook! ')
-      .trim()
   }
 }
 
@@ -268,6 +255,6 @@ class Ook {
 
 module.exports = {
   Brainfuck: new Brainfuck(),
-  HQ9: new HQ9()
-  Ook: new Ook(),
+  HQ9: new HQ9(),
+  Ook: new Ook()
 }
