@@ -8,12 +8,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/gitlab/esoteric-languages.git"
+    "url": "git+https://github.com/gitlab/chantek.git"
   },
   "author": "CosasDePuma",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gitlab/esoteric-languages/issues"
+    "url": "https://github.com/gitlab/chantek/issues"
   },
-  "homepage": "https://github.com/gitlab/esoteric-languages#readme"
+  "homepage": "https://github.com/gitlab/chantek#readme"
 }
