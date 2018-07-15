@@ -79,6 +79,18 @@ const __code = 'HQQQQQQH++'
 var output = HQ9.run(__code)
 ```
 
+:octopus: Support the developer!
+----
+Everything I do and publish can be used for free whenever I receive my corresponding merit.
+
+Anyway, if you want to help me in a more direct way, you can leave me a tip by clicking on this badge:
+
+<p align="center">
+    </br>
+    <a href="https://www.paypal.me/cosasdepuma/"><img src="https://img.shields.io/badge/Donate-PayPal-blue.svg?style=for-the-badge" alt="PayPal Donation"></img></a>
+</p>
+
+
 :earth_africa: Scheme of contents
 ----
 ```
@@ -101,4 +113,3 @@ Chantek
 ```
 
 Please contact with [Kike Puma](https://linkedin.com/in/kikepuma) if you need more information.
-s
