@@ -1,6 +1,6 @@
 -- https://github.com/niklasb/haskell-brainfuck
--- let helloworld = "++++++++++[>+++++++>++++++++++>+++>+<<<<-]>++.>+.+++++++..+++.>++.<<+++++++++++++++.>.+++.------.--------.>+.>."
-module Main where
+
+module Brainfuck.Parser where
 
 import Data.Maybe (catMaybes)
 import Control.Monad.State (liftM)
@@ -37,10 +37,7 @@ comments = noneOf "]" >> return Nothing
 parseSource :: Parser [Instructions]
 parseSource = liftM catMaybes $ many $ instructions <|> loops <|> comments
 
-main :: IO ()
-main = do
-  source <- readFile "helloworld.bf"
-  putStrLn source
+
+runParser source = do
   case parse parseSource "Parser :: Brainfuck" source of
-    Left err -> print err
-    Right ins -> print ins
+    Right ins -> return ins
