@@ -5,7 +5,7 @@ BF = Brainfuck/
 
 # Directives
 brainfuck:
-	$(CC) -o $(DIST)/brainfuck $(BF)$(SRC)/Main $(BF)$(SRC)/Parser
+	$(CC) -o $(DIST)/brainfuck $(BF)$(SRC)/Main $(BF)$(SRC)/Parser $(BF)$(SRC)/Interactive
 	make -s clean
 
 # Clean (Change this)

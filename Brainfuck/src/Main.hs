@@ -1,8 +1,10 @@
 module Main where
 
-import Brainfuck.Parser
+-- https://github.com/groscoe/friedman-wand-letrec-language/blob/master/src/Repl.hs
 
--- import Repl (runRepl)
+import Brainfuck.Parser (runParser)
+import Brainfuck.Interactive (runRepl)
+
 import System.Exit (exitWith, ExitCode(ExitSuccess))
 import System.Environment (getArgs)
 
@@ -33,5 +35,9 @@ parseArgs filename = concat `fmap` mapM readFile filename
 main :: IO ()
 main = do
   source <- getArgs >>= parseArgs
-  ast <- runParser source
-  print ast
+  if source == ""
+    then do
+      runRepl
+    else do
+      ast <- runParser source
+      print ast

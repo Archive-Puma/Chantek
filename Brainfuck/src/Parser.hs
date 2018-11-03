@@ -1,6 +1,6 @@
 -- https://github.com/niklasb/haskell-brainfuck
 
-module Brainfuck.Parser where
+module Brainfuck.Parser (runParser) where
 
 import Data.Maybe (catMaybes)
 import Control.Monad.State (liftM)
