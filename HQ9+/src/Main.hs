@@ -1,10 +1,10 @@
 module Main where
 
--- https://github.com/groscoe/friedman-wand-letrec-language/blob/master/src/Repl.hs
+-- https://rosettacode.org/wiki/Execute_HQ9%2B/Haskell
 
-import Brainfuck.Parser (runParser)
-import Brainfuck.Evaluator (runEval)
-import Brainfuck.Interactive (runRepl)
+import HQ9.Parser (runParser, Instructions(HelloWorld, Quine, Bottles, Increment))
+import HQ9.Evaluator (runEval)
+import HQ9.Interactive (runRepl)
 
 import System.Exit (exitWith, ExitCode(ExitSuccess))
 import System.Environment (getArgs)
@@ -15,7 +15,7 @@ usage = do
   putStrLn "(c)2018 CosasDePuma.  All rights reserved."
   putStrLn ""
   putStrLn "Usage:"
-  putStrLn "\tbrainfuck [-hqv] filename"
+  putStrLn "\thq9 [-hqv] filename"
   putStrLn "Options"
   putStrLn "\t-h, --help\t\tDisplay this help message"
   putStrLn "\t-q, --quiet, --silent\tSuppress messages"
@@ -23,7 +23,7 @@ usage = do
   putStrLn ""
 
 version = do
-  putStrLn "chantek v2.1 haskell ~brainfuck"
+  putStrLn "chantek v2.1 haskell ~HQ9+"
 
 exit = exitWith ExitSuccess
 
@@ -41,5 +41,4 @@ main = do
       runRepl
     else do
       ast <- runParser source
-      runEval ast
-      print ast
+      runEval ast source 0

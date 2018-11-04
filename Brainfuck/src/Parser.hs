@@ -3,10 +3,9 @@
 module Brainfuck.Parser (runParser) where
 
 import Data.Maybe (catMaybes)
-import Control.Monad.State (liftM)
-
-import Text.Parsec (noneOf, between, char, many, parse, oneOf, (<|>))
+import Text.Parsec (noneOf, between, char, many, oneOf, parse, (<|>))
 import Text.Parsec.String (Parser)
+import Control.Monad.State (liftM)
 
 data Instructions =
   Next
