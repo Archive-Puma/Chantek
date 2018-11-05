@@ -11,7 +11,11 @@ data Instructions =
   | Quine
   | Bottles
   | Increment
-  deriving Show
+instance Show Instructions where
+  show HelloWorld = "HelloWorld"
+  show Quine = "Quine"
+  show Bottles = "99Bottles"
+  show Increment = "Accumulator++"
 
 instruction :: Parser (Maybe Instructions)
 instruction = oneOf "HQ9+" >>= \ins -> return . Just $ case ins of
