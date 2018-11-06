@@ -1,7 +1,5 @@
 module Main where
 
--- https://rosettacode.org/wiki/Execute_HQ9%2B/Haskell
-
 import HQ9.Parser (runParser, Instructions(HelloWorld, Quine, Bottles, Increment))
 import HQ9.Evaluator (runEval)
 import HQ9.Interactive (runRepl)

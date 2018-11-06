@@ -3,7 +3,7 @@ module HQ9.Evaluator (runEval) where
 import HQ9.Parser (Instructions(HelloWorld, Quine, Bottles, Increment))
 
 import System.Exit (exitWith, ExitCode(ExitSuccess))
-import Control.Monad (forM_)
+import Control.Monad (forM_, foldM)
 
 -- https://stackoverflow.com/questions/6270324/in-haskell-how-do-you-trim-whitespace-from-the-beginning-and-end-of-a-string
 import Data.Char (isSpace)
@@ -29,7 +29,6 @@ runEval instructions source accumulator = forM_ instructions $ \ins -> case ins 
   HelloWorld -> putStrLn "Hello World!"
   Quine -> putStrLn $ trim source
   Bottles -> bottles 99
-  Increment -> putStrLn "Increment"
-
+  Increment -> show $ succ accumulator
 
 -- TODO: Accumulator

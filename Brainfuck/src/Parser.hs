@@ -1,5 +1,3 @@
--- https://github.com/niklasb/haskell-brainfuck
-
 module Brainfuck.Parser (runParser) where
 
 import Data.Maybe (catMaybes)
