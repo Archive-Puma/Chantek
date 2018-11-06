@@ -1,5 +1,6 @@
 - Clojure
   - [Growing a language with Clojure and instaparse] (http://gigasquidsoftware.com/blog/2013/05/01/growing-a-language-with-clojure-and-instaparse/)
+  - [Trollscript] (https://github.com/jjcomer/trollscript/blob/master/src/trollscript/core.clj)
 
 - Haskell
   - HQ9+
