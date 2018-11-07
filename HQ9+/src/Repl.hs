@@ -1,4 +1,4 @@
-module HQ9.Interactive (runRepl) where
+module HQ9.Repl (runRepl) where
 
 import HQ9.Parser (runParser)
 import HQ9.Evaluator (runEval)
@@ -17,8 +17,8 @@ interactiveMode = do
   putStr "? - "
   hFlush stdout
   input <- getLine
-  ast <- runParser input
-  runEval ast input 0
+  runParser input >>= runEval input
+  putStrLn ""
   interactiveMode
 
 runRepl = do

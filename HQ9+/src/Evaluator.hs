@@ -1,15 +1,11 @@
 module HQ9.Evaluator (runEval) where
 
-import HQ9.Parser (Instructions(HelloWorld, Quine, Bottles, Increment))
+import HQ9.Parser (Instructions(HelloWorld,Quine,Bottles,Increment))
 
-import System.Exit (exitWith, ExitCode(ExitSuccess))
-import Control.Monad (forM_, foldM)
-
--- https://stackoverflow.com/questions/6270324/in-haskell-how-do-you-trim-whitespace-from-the-beginning-and-end-of-a-string
-import Data.Char (isSpace)
-trim :: String -> String
-trim = f . f
-   where f = reverse . dropWhile isSpace
+-- TODO: Accumulator
+type Accumulator = Integer
+initState :: Accumulator
+initState = 0
 
 bottles 0 = do
   putStrLn "No more bottles of beer on the wall, no more bottles of beer."
@@ -25,10 +21,19 @@ bottles n = do
   putStrLn ""
   bottles $ n - 1
 
-runEval instructions source accumulator = forM_ instructions $ \ins -> case ins of
-  HelloWorld -> putStrLn "Hello World!"
-  Quine -> putStrLn $ trim source
-  Bottles -> bottles 99
-  Increment -> show $ succ accumulator
-
--- TODO: Accumulator
+runEval source ast = run (ast, initState)
+  where
+    run :: ([Instructions], Accumulator) -> IO ()
+    run ([],_) = putStr ""
+    run (HelloWorld:rest, accumulator) = do
+      putStrLn "Hello World!"
+      run(rest, accumulator)
+    run (Quine:rest, accumulator) = do
+      putStrLn source
+      run(rest, accumulator)
+    run (Bottles:rest, accumulator) = do
+      bottles 99
+      run(rest, accumulator)
+    run (Increment:rest, accumulator) = do
+      -- TODO: Accumulator
+      run(rest, accumulator)

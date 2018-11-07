@@ -1,35 +1,40 @@
-module HQ9.Parser (Instructions(HelloWorld, Quine, Bottles, Increment), runParser) where
+module HQ9.Parser (
+  runParser, Instructions(HelloWorld,Quine,Bottles,Increment)
+) where
 
 import Data.Char (toUpper)
-import Data.Maybe (catMaybes)
-import Text.Parsec (anyChar, oneOf, many, parse, (<|>))
+import Text.Parsec (anyChar, many, parse)
 import Text.Parsec.String (Parser)
-import Control.Monad.State (liftM)
 
+-- Instructions in HQ9+
 data Instructions =
-  HelloWorld
-  | Quine
-  | Bottles
-  | Increment
+  HelloWorld | Quine | Bottles | Increment
+-- How to show Instructions in stdout
 instance Show Instructions where
-  show HelloWorld = "HelloWorld"
-  show Quine = "Quine"
-  show Bottles = "99Bottles"
-  show Increment = "Accumulator++"
+  show HelloWorld  = "H"
+  show Quine       = "Q"
+  show Bottles     = "9"
+  show Increment   = "+"
 
-instruction :: Parser (Maybe Instructions)
-instruction = oneOf "HQ9+" >>= \ins -> return . Just $ case ins of
-  'H' -> HelloWorld
-  'Q' -> Quine
-  '9' -> Bottles
-  '+' -> Increment
+-- Parse many (zero or more) instructions
+program :: Parser [Instructions]
+program = many instructions
 
-comments :: Parser (Maybe Instructions)
-comments = anyChar >> return Nothing
+-- Parse single instructions
+instructions :: Parser Instructions
+instructions = do
+  ins <- anyChar        -- Take any char of the source code
+  return $ case ins of  -- Return a value depends of the char
+    'H' -> HelloWorld
+    'Q' -> Quine
+    '9' -> Bottles
+    '+' -> Increment
 
-parseSource :: Parser [Instructions]
-parseSource = liftM catMaybes $ many $ instruction <|> comments
+-- Remove all the non-instructions chars
+removeComments :: String -> String
+removeComments source = filter (`elem` "HQ9+") $ map toUpper source
+
 
 runParser source = do
-  case parse parseSource "Parser :: HQ9+" $ map toUpper source of
-    Right ins -> return ins
+  case parse program "Parser :: HQ9+" $ removeComments source of
+    Right source' -> return source'

@@ -1,11 +1,11 @@
 module Main where
 
-import HQ9.Parser (runParser, Instructions(HelloWorld, Quine, Bottles, Increment))
-import HQ9.Evaluator (runEval)
-import HQ9.Interactive (runRepl)
-
 import System.Exit (exitWith, ExitCode(ExitSuccess))
 import System.Environment (getArgs)
+
+import HQ9.Parser (runParser)
+import HQ9.Evaluator (runEval)
+import HQ9.Repl (runRepl)
 
 usage = do
   putStrLn ""
@@ -25,6 +25,7 @@ version = do
 
 exit = exitWith ExitSuccess
 
+parseArgs [] = runRepl >> exit
 parseArgs ["-h"] = usage >> exit
 parseArgs ["--help"] = usage >> exit
 parseArgs ["-v"] = version >> exit
@@ -34,9 +35,4 @@ parseArgs filename = concat `fmap` mapM readFile filename
 main :: IO ()
 main = do
   source <- getArgs >>= parseArgs
-  if source == ""
-    then do
-      runRepl
-    else do
-      ast <- runParser source
-      runEval ast source 0
+  runParser source >>= runEval source
