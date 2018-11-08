@@ -5,6 +5,7 @@ import HQ9.Evaluator (runEval)
 
 import System.IO (stdout, hFlush)
 
+-- Show the header of the Interactive mode
 header :: IO ()
 header = do
   putStrLn "chantek 2018 - Esoteric languages genius."
@@ -12,14 +13,15 @@ header = do
   putStrLn "Interactive mode. Press Ctrl + C to quit."
   putStrLn ""
 
+-- Repl
 interactiveMode :: IO ()
 interactiveMode = do
   putStr "? - "
   hFlush stdout
-  input <- getLine
-  runParser input >>= runEval input
+  input <- getLine                  -- Read the stdin
+  runParser input >>= runEval input -- Tokenize the input and evaluate it
   putStrLn ""
-  interactiveMode
+  interactiveMode                   -- Repeat
 
 runRepl = do
   header

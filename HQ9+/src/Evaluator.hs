@@ -2,11 +2,6 @@ module HQ9.Evaluator (runEval) where
 
 import HQ9.Parser (Instructions(HelloWorld,Quine,Bottles,Increment))
 
--- TODO: Accumulator
-type Accumulator = Integer
-initState :: Accumulator
-initState = 0
-
 bottles 0 = do
   putStrLn "No more bottles of beer on the wall, no more bottles of beer."
   putStrLn "Go to the store and buy some more, 99 bottles of beer on the wall."
@@ -21,10 +16,10 @@ bottles n = do
   putStrLn ""
   bottles $ n - 1
 
-runEval source ast = run (ast, initState)
+runEval source ast = run (ast, 0)
   where
-    run :: ([Instructions], Accumulator) -> IO ()
-    run ([],_) = putStr ""
+    run :: ([Instructions], Integer) -> IO ()
+    run ([],accumulator) = return ()
     run (HelloWorld:rest, accumulator) = do
       putStrLn "Hello World!"
       run(rest, accumulator)
@@ -34,6 +29,5 @@ runEval source ast = run (ast, initState)
     run (Bottles:rest, accumulator) = do
       bottles 99
       run(rest, accumulator)
-    run (Increment:rest, accumulator) = do
-      -- TODO: Accumulator
-      run(rest, accumulator)
+    run (Increment:rest, accumulator) =
+      run(rest, (+1) accumulator)

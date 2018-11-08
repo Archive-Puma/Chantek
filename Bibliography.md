@@ -11,3 +11,6 @@
     - [Nice Lazy BF](https://github.com/johnchildren/lazyfuck/blob/master/Lib.hs)
   - REPL
     - [REPL Example](https://github.com/groscoe/friedman-wand-letrec-language/blob/master/src/Repl.hs)
+
+  -- RESOURCES
+    - import Control.Monad.State

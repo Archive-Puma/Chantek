@@ -34,7 +34,7 @@ instructions = do
 removeComments :: String -> String
 removeComments source = filter (`elem` "HQ9+") $ map toUpper source
 
-
+-- runParser using the source code with the comments removed
 runParser source = do
   case parse program "Parser :: HQ9+" $ removeComments source of
     Right source' -> return source'

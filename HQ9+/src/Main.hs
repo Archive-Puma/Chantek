@@ -25,14 +25,14 @@ version = do
 
 exit = exitWith ExitSuccess
 
-parseArgs [] = runRepl >> exit
-parseArgs ["-h"] = usage >> exit
+parseArgs [] = runRepl >> exit                            -- Run Repl (Interactive mode)
+parseArgs ["-h"] = usage >> exit                          -- Display a help message
 parseArgs ["--help"] = usage >> exit
-parseArgs ["-v"] = version >> exit
+parseArgs ["-v"] = version >> exit                        -- Display the version of the program
 parseArgs ["--version"] = version >> exit
-parseArgs filename = concat `fmap` mapM readFile filename
+parseArgs filename = concat `fmap` mapM readFile filename -- Concatenate all the source files
 
 main :: IO ()
 main = do
-  source <- getArgs >>= parseArgs
-  runParser source >>= runEval source
+  source <- getArgs >>= parseArgs     -- Get the program arguments
+  runParser source >>= runEval source -- Tokenize the code and evaluate it
