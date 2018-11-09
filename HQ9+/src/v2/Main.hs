@@ -12,7 +12,7 @@ import System.Environment (getArgs)
 import Control.Monad.State (evalState, get, put, State)
 
 -- Dispay the help message
-usage :: IO ()make 
+usage :: IO ()
 usage = do
   putStrLn ""
   putStrLn "chantek 2018 - Esoteric languages genius."
