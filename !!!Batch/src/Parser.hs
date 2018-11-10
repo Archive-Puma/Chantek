@@ -1,7 +1,7 @@
 module Batch'''.Parser where
 
 -- Haskell libraries
-import Text.Parsec (char, many, many1, oneOf, optionMaybe, parse, (<|>))
+import Text.Parsec (char, many, many1, oneOf, optionMaybe, parse)
 import Text.Parsec.String (Parser)
 
 -- Remove all the non-instructions chars
