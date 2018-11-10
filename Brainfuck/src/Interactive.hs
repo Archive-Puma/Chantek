@@ -1,6 +1,6 @@
 module Brainfuck.Interactive (runRepl) where
 
-import Brainfuck.Parser (runParser)
+import Brainfuck.Parser
 
 import System.IO (stdout, hFlush)
 
@@ -11,15 +11,14 @@ header = do
   putStrLn "Interactive mode. Press Ctrl + C to quit."
   putStrLn ""
 
-interactiveMode :: IO ()
-interactiveMode = do
+interactiveMode memory = do
   putStr "? - "
   hFlush stdout
   input <- getLine
-  ast <- runParser input
-  print ast
-  interactiveMode
+  let ast = parse input
+  run memory $ instruct ast
+  interactiveMode memory
 
 runRepl = do
   header
-  interactiveMode
+  interactiveMode emptyMemory

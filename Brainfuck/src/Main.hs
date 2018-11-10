@@ -1,8 +1,7 @@
 module Main where
 
-import Brainfuck.Parser (runParser)
-import Brainfuck.Evaluator (runEval)
-import Brainfuck.Interactive (runRepl)
+import Brainfuck.Parser
+-- import Brainfuck.Interactive (runRepl)
 
 import System.Exit (exitWith, ExitCode(ExitSuccess))
 import System.Environment (getArgs)
@@ -36,8 +35,8 @@ main = do
   source <- getArgs >>= parseArgs
   if source == ""
     then do
-      runRepl
+      exit --runRepl
     else do
-      ast <- runParser source
-      runEval ast
+      let ast = parse source
+      run emptyMemory $ instruct ast
       print ast

@@ -1,9 +1,15 @@
-module Brainfuck.Parser (runParser) where
 
-import Data.Maybe (catMaybes)
-import Text.Parsec (noneOf, between, char, many, oneOf, parse, (<|>))
-import Text.Parsec.String (Parser)
-import Control.Monad.State (liftM)
+module Brainfuck.Parser (
+  emptyMemory,instruct,parse,run,
+  Memory, Instructions, Program
+) where
+
+import Data.Char (chr,ord)
+import System.IO (stdout, stdin, hFlush)
+
+{-
+    THE PARSER
+-}
 
 data Instructions =
   Next
@@ -12,29 +18,68 @@ data Instructions =
   | Decrement
   | Input
   | Output
-  | Loop [Instructions]
-  | Comment
-  deriving Show
+  | LoopR
+  | LoopL
+  deriving (Show)
+type Program = [Instructions]
 
-instructions :: Parser (Maybe Instructions)
-instructions = oneOf "><+-,." >>= \ins -> return . Just $ case ins of
-  '>' -> Next
-  '<' -> Previous
-  '+' -> Increment
-  '-' -> Decrement
-  ',' -> Input
-  '.' -> Output
+parse :: String ->  Program
+parse = map toInstruction . filter (`elem` "><+-,.[]")
+  where
+    toInstruction ins = case ins of
+      '>' -> Next
+      '<' -> Previous
+      '+' -> Increment
+      '-' -> Decrement
+      ',' -> Input
+      '.' -> Output
+      '[' -> LoopL
+      ']' -> LoopR
 
-loops :: Parser (Maybe Instructions)
-loops = between (char '[') (char ']') (parseSource >>= return . Just . Loop)
+{-
+    THE MEMORY
+-}
 
-comments :: Parser (Maybe Instructions)
-comments = noneOf "]" >> return Nothing
+data Memory a = Memory [a] a [a]
 
-parseSource :: Parser [Instructions]
-parseSource = liftM catMaybes $ many $ instructions <|> loops <|> comments
+emptyMemory :: Memory Int
+emptyMemory = Memory zeros 0 zeros
+  where zeros = repeat 0
 
+instruct :: Program -> Memory Instructions
+instruct (ins:instructions) = Memory [] ins instructions
 
-runParser source = do
-  case parse parseSource "Parser :: Brainfuck" source of
-    Right ins -> return ins
+{-
+    THE INSTRUCTIONS
+-}
+
+next,previous :: Memory a -> Memory a
+next      (Memory left middle (r:right)) = Memory (middle:left) r right
+previous  (Memory (l:left) middle right) = Memory left l (middle:right)
+increment,decrement :: Memory Int -> Memory Int
+increment (Memory left middle right) = Memory left (middle + 1) right
+decrement (Memory left middle right) = Memory left (middle - 1) right
+output :: Memory Int -> IO ()
+output  (Memory _ middle _) = do
+  hFlush stdout
+  putChar $ chr middle
+
+{-
+    THE EVALUATOR
+-}
+
+nextInstruction :: Memory Int -> Memory Instructions -> IO ()
+nextInstruction memory (Memory _ _ [])  = return ()
+nextInstruction memory instructions     = run memory $ next instructions
+
+run :: Memory Int -> Memory Instructions -> IO ()
+run memory instructions@(Memory _ Next _)                 = nextInstruction (next memory) instructions
+run memory instructions@(Memory _ Previous _)             = nextInstruction (previous memory) instructions
+run memory instructions@(Memory _ Increment _)            = nextInstruction (increment memory) instructions
+run memory instructions@(Memory _ Decrement _)            = nextInstruction (decrement memory) instructions
+run (Memory left _ right) instructions@(Memory _ Input _) = do
+  input <- getChar
+  nextInstruction (Memory left (ord input) right) instructions
+run memory instructions@(Memory _ Output _)               = do
+  output memory
+  nextInstruction memory instructions
