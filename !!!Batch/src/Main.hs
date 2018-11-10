@@ -8,5 +8,5 @@ import Batch'''.Arguments (runArgs)
 -- Entrypoint
 main :: IO ()
 main = do
-  source <- runArgs
-  putStr $ runParser source >>= runEval
+  source <- runArgs >>= runParser
+  putStr $ runEval source
