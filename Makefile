@@ -1,6 +1,7 @@
 CC = ghc
 SRC = src
-DIST = dist
+DIST = dist/linux
+
 
 B! = \!\!\!Batch/
 
