@@ -25,7 +25,7 @@ usage = do
   putStrLn "Run interactive mode without using any arguments"
   putStrLn ""
   putStrLn "Usage:"
-  putStrLn "\thq9 [-hv] filename"
+  putStrLn "\thq9-v1 [-hv] filename"
   putStrLn "Options"
   putStrLn "\t-h, --help\t\tDisplay this help message"
   putStrLn "\t-v, --version\t\tDisplay version information and exit"
@@ -34,7 +34,7 @@ usage = do
 -- Display the version
 version :: IO ()
 version = do
-  putStrLn "chantek v2.1.1 haskell ~HQ9+"
+  putStrLn "chantek v0.1.1 haskell ~HQ9+"
 
 -- Exit the program successfully
 exit :: IO a

@@ -12,15 +12,14 @@ usage = do
   putStrLn "(c)2018 CosasDePuma.  All rights reserved."
   putStrLn ""
   putStrLn "Usage:"
-  putStrLn "\tbrainfuck [-hqv] filename"
+  putStrLn "\tbrainfuck [-hv] filename"
   putStrLn "Options"
   putStrLn "\t-h, --help\t\tDisplay this help message"
-  putStrLn "\t-q, --quiet, --silent\tSuppress messages"
   putStrLn "\t-v, --version\t\tDisplay version information and exit"
   putStrLn ""
 
 version = do
-  putStrLn "chantek v2.1 haskell ~brainfuck"
+  putStrLn "chantek v0.2 haskell ~brainfuck"
 
 exit = exitWith ExitSuccess
 

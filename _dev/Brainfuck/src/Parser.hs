@@ -23,8 +23,7 @@ data Instructions =
   deriving (Show)
 type Program = [Instructions]
 
-parse :: String ->  Program
-parse = map toInstruction . filter (`elem` "><+-,.[]")
+instructions = map toInstruction . filter (`elem` "><+-,.[]")
   where
     toInstruction ins = case ins of
       '>' -> Next
@@ -33,8 +32,11 @@ parse = map toInstruction . filter (`elem` "><+-,.[]")
       '-' -> Decrement
       ',' -> Input
       '.' -> Output
-      '[' -> LoopL
-      ']' -> LoopR
+
+loop = between (char '[') (char ']') 
+
+parse :: String ->  Program
+parse = instructions <|> loop
 
 {-
     THE MEMORY
